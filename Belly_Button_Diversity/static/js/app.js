@@ -3,6 +3,27 @@ function buildMetadata(sample) {
   // @TODO: Complete the following function that builds the metadata panel
 
   // Use `d3.json` to fetch the metadata for a sample
+
+var url = "/api/belly";
+d3.json(url).then(function(sample){
+  console.log(sample);
+
+  var data = [sample];
+
+  
+  var layout = {
+    title: "Belly Button Diversity",
+    xaxis: {
+      title: "Belly Buttons"
+    },
+    yaxis: {
+      title: "Diversity"
+    }
+  };
+
+  Plotly.newPlot("plot", data, layout);
+});
+}
     // Use d3 to select the panel with id of `#sample-metadata`
 
     // Use `.html("") to clear any existing metadata
