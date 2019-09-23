@@ -3,53 +3,47 @@ function buildMetadata(sample) {
   // @TODO: Complete the following function that builds the metadata panel
 
   // Use `d3.json` to fetch the metadata for a sample
-
-var url = "/api/belly";
-d3.json(url).then(function(sample){
-  console.log(sample);
-
-  var data = [sample];
-
   
-  var layout = {
-    title: "Belly Button Diversity",
-    xaxis: {
-      title: "Belly Buttons"
-    },
-    yaxis: {
-      title: "Diversity"
-    }
-  };
+  const metadataURL = "/metadata/" +sample;
+  d3.json(metadataURL).then((data) => {
+ 
+  // Use d3 to select the panel with id of `#sample-metadata`
+  metadatapanel = d3.select("#sample-metadata");
+  
+  
+  // Use `.html("") to clear any existing metadata
+  metadatapanel.html("");
 
-  Plotly.newPlot("plot", data, layout);
+  // Use `Object.entries` to add each key and value pair to the panel
+  Object.entries(data).forEach(([key, value]) => {
+    metadatapanel.append("p").text(`${key}: ${value}`);
+
 });
+buildGauge(data.WFREQ);
+});
+
 }
-    // Use d3 to select the panel with id of `#sample-metadata`
-
-    // Use `.html("") to clear any existing metadata
-
-    // Use `Object.entries` to add each key and value pair to the panel
     // Hint: Inside the loop, you will need to use d3 to append new
     // tags for each key-value in the metadata.
 
     // BONUS: Build the Gauge Chart
     // buildGauge(data.WFREQ);
 
-    var data = [
-      {
-        domain: { x: [0, 1], y: [0, 1] },
-        value: 270,
-        title: { text: "Speed" },
-        type: "indicator",
-        mode: "gauge+number"
-      }
-    ];
+//     var data = [
+//       {
+//         domain: { x: [0, 1], y: [0, 1] },
+//         value: 270,
+//         title: { text: "Speed" },
+//         type: "indicator",
+//         mode: "gauge+number"
+//       }
+//     ];
     
-    var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
-    Plotly.newPlot(gd, data, layout);
-}
+//     var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+//     Plotly.newPlot(gd, data, layout);
+// }
 
-function buildCharts(sample) {
+// function buildCharts(sample) {
 
   // @TODO: Use `d3.json` to fetch the sample data for the plots
 
