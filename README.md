@@ -1,2 +1,1 @@
-# plotly-challenge
-JavaScript Plotly
+JavaScript Plotly Homework
