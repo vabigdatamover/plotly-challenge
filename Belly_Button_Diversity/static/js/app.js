@@ -34,6 +34,19 @@ d3.json(url).then(function(sample){
 
     // BONUS: Build the Gauge Chart
     // buildGauge(data.WFREQ);
+
+    var data = [
+      {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: 270,
+        title: { text: "Speed" },
+        type: "indicator",
+        mode: "gauge+number"
+      }
+    ];
+    
+    var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+    Plotly.newPlot(gd, data, layout);
 }
 
 function buildCharts(sample) {
@@ -42,7 +55,40 @@ function buildCharts(sample) {
 
     // @TODO: Build a Bubble Chart using the sample data
 
+    var trace1 = {
+      x: [1, 2, 3, 4],
+      y: [10, 11, 12, 13],
+      mode: 'markers',
+      marker: {
+        size: [40, 60, 80, 100]
+      }
+    };
+    
+    var data = [trace1];
+    
+    var layout = {
+      title: 'Marker Size',
+      showlegend: false,
+      height: 600,
+      width: 600
+    };
+    
+    Plotly.newPlot('myDiv', data, layout);
+
     // @TODO: Build a Pie Chart
+
+    var data = [{
+      values: [19, 26, 55],
+      labels: ['Residential', 'Non-Residential', 'Utility'],
+      type: 'pie'
+    }];
+    
+    var layout = {
+      height: 400,
+      width: 500
+    };
+    
+    Plotly.newPlot('myDiv', data, layout);
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
 }
