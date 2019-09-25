@@ -47,42 +47,37 @@ buildGauge(data.WFREQ);
 
   // @TODO: Use `d3.json` to fetch the sample data for the plots
 
+  const sampleDataURL = "/samples/" +sample;
+  d3.json(sampleDataURL).then((data)=> {
+
     // @TODO: Build a Bubble Chart using the sample data
 
-    var trace1 = {
-      x: [1, 2, 3, 4],
-      y: [10, 11, 12, 13],
-      mode: 'markers',
-      marker: {
-        size: [40, 60, 80, 100]
-      }
-    };
     
-    var data = [trace1];
-    
-    var layout = {
-      title: 'Marker Size',
-      showlegend: false,
-      height: 600,
-      width: 600
-    };
-    
-    Plotly.newPlot('myDiv', data, layout);
 
     // @TODO: Build a Pie Chart
 
-    var data = [{
-      values: [19, 26, 55],
-      labels: ['Residential', 'Non-Residential', 'Utility'],
-      type: 'pie'
-    }];
-    
-    var layout = {
-      height: 400,
-      width: 500
+    results = [];
+    for (var i = 0; i < data.otu_ids.length; i++){
+      results.push({"otu_ids":data.otu_ids[i], "otu_labels": data.otu_labels[i], "sample_values":data.sample_values[i] });
+
     };
-    
-    Plotly.newPlot('myDiv', data, layout);
+    results.sort((a,b) => b.sample_values - a.sample_values);
+    results =results.slice(0,10);
+    console.log(results);
+    // Trace for the sample data
+    var trace1 ={
+      values:results.map(row => row.sample_values),
+      labels:results.map(row => row.otu_ids),
+      hovertext: results.map(row => row.otu_labels),
+      hoverinfo: "hovertext",
+      type:"pie"
+      //orientation: "h"
+
+    };
+    var pieChart = [trace1];
+    Plotly.newPlot("pie", pieChart);
+
+
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
 }
