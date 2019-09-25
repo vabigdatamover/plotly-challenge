@@ -29,21 +29,21 @@ buildGauge(data.WFREQ);
     // BONUS: Build the Gauge Chart
     // buildGauge(data.WFREQ);
 
-//     var data = [
-//       {
-//         domain: { x: [0, 1], y: [0, 1] },
-//         value: 270,
-//         title: { text: "Speed" },
-//         type: "indicator",
-//         mode: "gauge+number"
-//       }
-//     ];
+    var data = [
+      {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: 270,
+        title: { text: "Speed" },
+        type: "indicator",
+        mode: "gauge+number"
+      }
+    ];
     
-//     var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
-//     Plotly.newPlot(gd, data, layout);
-// }
+    var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+    Plotly.newPlot(gd, data, layout);
+}
 
-// function buildCharts(sample) {
+function buildCharts(sample) {
 
   // @TODO: Use `d3.json` to fetch the sample data for the plots
 
@@ -52,7 +52,20 @@ buildGauge(data.WFREQ);
 
     // @TODO: Build a Bubble Chart using the sample data
 
-    
+    var trace2 = {
+      x:data.otu_ids,
+      y:data.sample_values,
+      type: "scatter",
+      mode: "markers",
+      marker:{
+        size:data.sample_values,
+        color: data.otu_ids
+      },
+      text: data.otu_labels
+
+    };
+    var bubbleChart = [trace2];
+    Plotly.newPlot("bubble", bubbleChart);
 
     // @TODO: Build a Pie Chart
 
