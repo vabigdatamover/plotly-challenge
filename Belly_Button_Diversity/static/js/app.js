@@ -19,7 +19,7 @@ function buildMetadata(sample) {
       metadatapanel.append("p").text(`${key}: ${value}`);
 
 });
-buildGauge(data.WFREQ);
+//buildGauge(data.WFREQ);
 });
 }
 
@@ -49,14 +49,14 @@ function init() {
 
     // Use the first sample from the list to build the initial plots
     const firstSample = sampleNames[0];
-    buildCharts(firstSample);
+    // buildCharts(firstSample);
     buildMetadata(firstSample);
   });
 }
 
 function optionChanged(newSample) {
   // Fetch new data each time a new sample is selected
-  buildCharts(newSample);
+  // buildCharts(newSample);
   buildMetadata(newSample);
 }
 
