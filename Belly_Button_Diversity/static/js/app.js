@@ -28,10 +28,39 @@ function buildCharts(sample) {
   // @TODO: Use `d3.json` to fetch the sample data for the plots
 
     // @TODO: Build a Bubble Chart using the sample data
+    var trace1 = {
+      y: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      mode: 'markers',
+      marker: {
+        size: 40,
+        color: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39]
+      }
+    };
+    
+    var data = [trace1];
+    
+    var layout = {
+      title: 'Scatter Plot with a Color Dimension'
+    };
+    
+    Plotly.newPlot('myDiv', data, layout);
 
     // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
+    var data = [{
+      values: [19, 26, 55],
+      labels: ['Residential', 'Non-Residential', 'Utility'],
+      type: 'pie'
+    }];
+    
+    var layout = {
+      height: 400,
+      width: 500
+    };
+    
+    Plotly.newPlot('myDiv', data, layout);
+
 }
 
 function init() {
