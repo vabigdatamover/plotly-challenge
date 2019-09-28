@@ -1,3 +1,8 @@
+//GB setup code to get into the right environment
+// conda deactivate
+// env\Scripts\activate.bat
+// 
+
 function buildMetadata(sample) {
 
   // @TODO: Complete the following function that builds the metadata panel
@@ -62,7 +67,7 @@ function buildCharts(sample) {
     Plotly.newPlot('pie', pieChart);
 
 })
-
+}
 function init() {
   // Grab a reference to the dropdown select element
   var selector = d3.select("#selDataset");
