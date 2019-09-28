@@ -26,31 +26,31 @@ function buildMetadata(sample) {
 function buildCharts(sample) {
 
   // @TODO: Use `d3.json` to fetch the sample data for the plots
+  const sampleDataURL = "/samples/" +sample;
+  d3.json(sampleDataURL).then((data)=> {
 
     // @TODO: Build a Bubble Chart using the sample data
     var trace1 = {
-      y: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      y:data.otu_ids,
+      x:data.sample_values,
+      type: "scatter",
       mode: 'markers',
       marker: {
-        size: 40,
-        color: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39]
-      }
+        size:data.sample_values,
+        color: data.otu_ids 
+      },
+      text: data.otu_labels
     };
-    
-    var data = [trace1];
-    
-    var layout = {
-      title: 'Scatter Plot with a Color Dimension'
-    };
-    
-    Plotly.newPlot('myDiv', data, layout);
 
+    var bubbleChart = [trace1];
+    Plotly.newPlot("bubble", bubbleChart);
+    
     // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
-    var data = [{
-      values: [19, 26, 55],
-      labels: ['Residential', 'Non-Residential', 'Utility'],
+    var trace2 = [{
+      values: data.sample_values,
+      labels: data.otu_labels,
       type: 'pie'
     }];
     
@@ -59,9 +59,9 @@ function buildCharts(sample) {
       width: 500
     };
     
-    Plotly.newPlot('myDiv', data, layout);
+    Plotly.newPlot('pie', pieChart);
 
-}
+})
 
 function init() {
   // Grab a reference to the dropdown select element
@@ -78,14 +78,14 @@ function init() {
 
     // Use the first sample from the list to build the initial plots
     const firstSample = sampleNames[0];
-    // buildCharts(firstSample);
+    buildCharts(firstSample);
     buildMetadata(firstSample);
   });
 }
 
 function optionChanged(newSample) {
   // Fetch new data each time a new sample is selected
-  // buildCharts(newSample);
+  buildCharts(newSample);
   buildMetadata(newSample);
 }
 
