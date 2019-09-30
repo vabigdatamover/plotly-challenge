@@ -1,0 +1,1 @@
+web: gunicorn BELLY_BUTTON_DIVERSITY.app:app
