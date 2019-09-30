@@ -8,6 +8,8 @@ function buildMetadata(sample) {
   // @TODO: Complete the following function that builds the metadata panel
 
   // Use `d3.json` to fetch the metadata for a sample
+  const otu_labels = data.otu_labels;
+  const sample_values = data.sample_values;
   const metadataURL = "/metadata/" +sample;
   d3.json(metadataURL).then((data) => {
   // Use d3 to select the panel with id of `#sample-metadata`
@@ -24,13 +26,15 @@ function buildMetadata(sample) {
       metadatapanel.append("p").text(`${key}: ${value}`);
 
 });
-//buildGauge(data.WFREQ);
+  buildGauge(data.WFREQ);
 });
 }
 
 function buildCharts(sample) {
 
   // @TODO: Use `d3.json` to fetch the sample data for the plots
+  const otu_labels = data.otu_labels;
+  const sample_values = data.sample_values;
   const sampleDataURL = "/samples/" +sample;
   d3.json(sampleDataURL).then((data)=> {
 
@@ -53,20 +57,37 @@ function buildCharts(sample) {
     // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
-    var trace2 = [{
-      values: data.sample_values,
-      labels: data.otu_labels,
-      type: 'pie'
-    }];
-    
-    var layout = {
-      height: 400,
-      width: 500
-    };
-    
-    Plotly.newPlot('pie', pieChart);
-
-})
+    d3.json(`/samples/${sample}`).then(function(data) {  
+      var pie_values = data.sample_values.slice(0,10);
+        var pie_labels = data.otu_ids.slice(0,10);
+        var pie_hover = data.otu_labels.slice(0,10);
+  ​      var data = [{
+          values: pie_values,
+          labels: pie_labels,
+          hovertext: pie_hover,
+          type: 'pie'
+        }];
+  ​
+        Plotly.newPlot('pie', data);
+  ​
+      });
+  })
+}
+// Wire Gauge Feature
+const otu_labels = data.otu_labels;
+const sample_values = data.sample_values;
+function buildGauge(wfreq) {
+  var data = [
+    {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: wfreq,
+        title: { text: "Scrubs per week" },
+        type: "indicator",
+        mode: "gauge+number"
+    }
+];
+​var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+Plotly.newPlot('gauge', data, layout);
 }
 function init() {
   // Grab a reference to the dropdown select element
